@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kegiatan & Keuangan</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <img src="image/tea.gif" alt="Loading Arisan..." />
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-content">
+                <a class="logo-container" href="index.html">
+                    <div class="logo-icon">👛</div>
+                    <div class="logo-text">Arisan Club</div>
+                </a>
+
+                <div class="user-menu">
+                    <a class="user-icon" href="login.html">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Hello!</h1>
+                <p>Platform ini dirancang untuk memudahkan member dalam melihat jadwal kegiatan dan laporan keuangan</p>
+                <div class="cta-buttons">
+
+                    <div class="nav-menu">
+                        <div class="nav-item active" onclick="showSection('informasi')" id="nav-informasi">
+                            <div class="nav-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H19v2h2v2H3V4h2V2h1.5v2h11V2z" />
+                                </svg>
+                            </div>
+                            <h3>Jadwal Kegiatan</h3>
+                        </div>
+                        <div class="nav-item" onclick="showSection('keuangan')" id="nav-keuangan">
+                            <div class="nav-icon">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z" />
+                                </svg>
+                            </div>
+                            <h3>Laporan Keuangan</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Informasi Section -->
+        <section class="section active" id="informasi">
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button class="calendar-nav" onclick="previousMonth()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                        </svg>
+                    </button>
+                    <h2 class="calendar-title" id="calendarTitle">Juni 2025</h2>
+                    <button class="calendar-nav" onclick="nextMonth()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="calendar-scroll-wrapper">
+                    <div class="calendar-grid" id="calendarGrid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="keuangan">
+            <div class="finance-controls">
+                <div class="filter-group">
+                    <select id="filter-month" class="period-btn">
+                        <option value="">Pilih Bulan</option>
+                        <option value="1">Januari</option>
+                        <option value="2">Februari</option>
+                        <option value="3">Maret</option>
+                        <option value="4">April</option>
+                        <option value="5">Mei</option>
+                        <option value="6">Juni</option>
+                        <option value="7">Juli</option>
+                        <option value="8">Agustus</option>
+                        <option value="9">September</option>
+                        <option value="10">Oktober</option>
+                        <option value="11">November</option>
+                        <option value="12">Desember</option>
+                    </select>
+
+                    <select id="filter-year" class="period-btn">
+                        <option value="">Pilih Tahun</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                    </select>
+
+                    <button onclick="applyFilter()" class="period-btn active">Terapkan</button>
+                </div>
+            </div>
+
+            <div class="finance-grid">
+                <div class="finance-card">
+                    <div class="finance-header">
+                        <div class="finance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M7 14c-1.66 0-3 1.34-3 3s1.34 3 3 3
+                                     3-1.34 3-3-1.34-3-3-3zM7 10.5c1.66 0
+                                     3-1.34 3-3s-1.34-3-3-3-3 1.34-3
+                                     3 1.34 3 3 3zM17 14c-1.66 0-3
+                                     1.34-3 3s1.34 3 3 3 3-1.34
+                                     3-3-1.34-3-3-3zM17 10.5c1.66 0
+                                     3-1.34 3-3s-1.34-3-3-3-3
+                                     1.34-3 3 1.34 3 3 3z" />
+                            </svg>
+                        </div>
+                        <div class="finance-title">Total Pemasukan</div>
+                    </div>
+                    <div class="finance-amount" id="totalIncome">Rp 0</div>
+                    <div class="finance-details" id="incomeDetails">
+                    </div>
+                </div>
+
+                <div class="finance-card">
+                    <div class="finance-header">
+                        <div class="finance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M7 18c-1.1 0-2-.9-2-2s.9-2
+                                     2-2 2 .9 2 2-.9 2-2 2zM1 2h3.27l.94
+                                     2H20c.55 0 1 .45 1 1 0 .09-.01.18-.04.27l-3.54
+                                     6.4c-.77 1.39-2.25 2.33-3.96 2.33H8.1l-.9
+                                     1.63-.03.12c0 .14.11.25.25.25H19v2H7c-1.1
+                                     0-2-.9-2-2 0-.35.09-.68.24-.96L6.6
+                                     11H4.27L2 4H1V2zm16 16c-1.1 0-2-.9-2-2s.9-2
+                                     2-2 2 .9 2 2-.9 2-2 2z" />
+                            </svg>
+                        </div>
+                        <div class="finance-title">Total Pengeluaran</div>
+                    </div>
+                    <div class="finance-amount" id="totalExpense">Rp 0</div>
+                    <div class="finance-details" id="expenseDetails">
+                    </div>
+                </div>
+
+                <!-- Saldo Tersisa -->
+                <div class="finance-card">
+                    <div class="finance-header">
+                        <div class="finance-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48
+                                     10 10 10 10-4.48 10-10S17.52 2
+                                     12 2zm-2 15l-5-5 1.41-1.41L10
+                                     14.17l7.59-7.59L19 8l-9 9z" />
+                            </svg>
+                        </div>
+                        <div class="finance-title">Saldo Tersisa</div>
+                    </div>
+                    <div class="finance-amount" id="totalBalance">Rp 0</div>
+                    <div class="finance-details" id="balanceDetails">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Detail Kegiatan</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+    <script src="js/preloader.js"></script>
+    <script src="js/calendar.js"></script>
+    <script>
+
+        const events = {
+            '2025-06-05': [{
+                title: 'Senam Pagi',
+                time: '07:00 - 08:00',
+                location: 'Taman Kota',
+                description: 'Senam pagi rutin untuk kesehatan bersama'
+            }],
+            '2025-06-10': [{
+                title: 'Arisan Bulanan',
+                time: '19:00 - 21:00',
+                location: 'Rumah Ibu Sari',
+                description: 'Arisan rutin bulanan dengan sharing session'
+            }],
+            '2025-06-15': [{
+                title: 'Kelas Memasak',
+                time: '14:00 - 16:00',
+                location: 'Dapur Komunal',
+                description: 'Belajar memasak kue tradisional bersama'
+            }],
+
+            '2025-06-25': [{
+                title: 'Pengajian Rutin',
+                time: '19:30 - 21:00',
+                location: 'Masjid Al-Ikhlas',
+                description: 'Pengajian rutin mingguan dengan tausiah'
+            }]
+        };
+
+        let currentMonth = 5;
+        let currentYear = 2025;
+        let activePeriod = 'month';
+
+        function showSection(sectionName) {
+
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            document.getElementById(sectionName).classList.add('active');
+            document.getElementById('nav-' + sectionName).classList.add('active');
+
+            if (sectionName === 'informasi') {
+                setTimeout(() => generateCalendar(), 100);
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function showLogin() {
+            alert('Halaman login admin akan segera ditampilkan');
+        }
+
+        document.addEventListener('click', function (event) {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+
+            if (!userMenu.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        function setPeriod(period) {
+            activePeriod = period;
+
+            document.querySelectorAll('.period-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('btn-' + period).classList.add('active');
+
+            updateFinanceData();
+        }
+
+        function updateFinanceData() {
+            const monthlyData = {
+                income: 8500000,
+                expense: 6200000,
+                balance: 2300000,
+                incomeDetails: [{
+                    label: 'Iuran Bulanan',
+                    amount: 6000000
+                },
+                {
+                    label: 'Dana Kegiatan',
+                    amount: 1500000
+                },
+                {
+                    label: 'Donasi',
+                    amount: 1000000
+                }
+                ],
+                expenseDetails: [{
+                    label: 'Kegiatan Rutin',
+                    amount: 3000000
+                },
+                {
+                    label: 'Operasional',
+                    amount: 1800000
+                },
+                {
+                    label: 'Konsumsi',
+                    amount: 1400000
+                }
+                ]
+            };
+
+            const yearlyData = {
+                income: 95000000,
+                expense: 78000000,
+                balance: 17000000,
+                incomeDetails: [{
+                    label: 'Iuran Tahunan',
+                    amount: 72000000
+                },
+                {
+                    label: 'Dana Kegiatan',
+                    amount: 15000000
+                },
+                {
+                    label: 'Donasi & Sponsor',
+                    amount: 8000000
+                }
+                ],
+                expenseDetails: [{
+                    label: 'Kegiatan Rutin',
+                    amount: 36000000
+                },
+                {
+                    label: 'Operasional',
+                    amount: 24000000
+                },
+                {
+                    label: 'Program Khusus',
+                    amount: 18000000
+                }
+                ]
+            };
+
+            const data = activePeriod === 'month' ? monthlyData : yearlyData;
+
+            const formatCurrency = (amount) => {
+                return 'Rp ' + amount.toLocaleString('id-ID');
+            };
+
+            document.getElementById('totalIncome').textContent = formatCurrency(data.income);
+            document.getElementById('totalExpense').textContent = formatCurrency(data.expense);
+            document.getElementById('totalBalance').textContent = formatCurrency(data.balance);
+
+            const incomeDetails = document.getElementById('incomeDetails');
+            incomeDetails.innerHTML = '';
+            data.incomeDetails.forEach(item => {
+                const detailItem = document.createElement('div');
+                detailItem.className = 'detail-item';
+                detailItem.innerHTML = `
+                    <span class="detail-label">${item.label}</span>
+                    <span class="detail-value income">${formatCurrency(item.amount)}</span>
+                `;
+                incomeDetails.appendChild(detailItem);
+            });
+
+            const expenseDetails = document.getElementById('expenseDetails');
+            expenseDetails.innerHTML = '';
+            data.expenseDetails.forEach(item => {
+                const detailItem = document.createElement('div');
+                detailItem.className = 'detail-item';
+                detailItem.innerHTML = `
+                    <span class="detail-label">${item.label}</span>
+                    <span class="detail-value expense">${formatCurrency(item.amount)}</span>
+                `;
+                expenseDetails.appendChild(detailItem);
+            });
+        }
+
+        document.getElementById('eventModal').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateFinanceData();
+        });
+    </script>
+
+</body>
+
+</html>
