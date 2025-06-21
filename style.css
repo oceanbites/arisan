@@ -779,8 +779,10 @@ body {
     margin: 3rem auto;
     padding: 2rem;
     background: white;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(249, 168, 212, 0.2);
 }
 
 .login-title {
