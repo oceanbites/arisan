@@ -20,10 +20,12 @@
     <div class="main-content" id="mainContent">
         <header class="header">
             <div class="header-content">
-                <a class="logo-container" href="index.html">
-                    <div class="logo-icon">👛</div>
-                    <div class="logo-text">Arisan Club</div>
-                </a>
+                 <a class="logo-container" href="{{ route('home') }}" style="display: flex; align-items: center; text-decoration: none; gap: 10px;">
+                <div class="logo-icon" style="flex-shrink: 0;">
+                    <img src="{{ asset('image/logo.png') }}" alt="logo" width="50px" style="display: block;" />
+                </div>
+               <div class="logo-text">Arisan RT</div>
+            </a>
 
                 <div class="user-menu">
                     <a class="user-icon" href="login.html">
